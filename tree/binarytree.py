@@ -44,14 +44,14 @@ class BST:
     ####
     def __findMin(self, node):
         if node.left is None:
-            return node.data
+            return node
         return self.__findMin(node.left)
     def findMin(self):
         return self.__findMin(self.root)
     ####
     def __findMax(self, node):
         if node.right is None:
-            return node.data
+            return node
         return self.__findMax(node.right)
     def findMax(self):
         return self.__findMax(self.root)
@@ -68,7 +68,39 @@ class BST:
     def search(self, data):
         return self.__search(data, self.root)
     def __deleteNode(self, data, root):
-        pass
+        if root is None:
+            return None
+        if data < root.data:
+            root.left = self.__deleteNode(data, root.left)
+        elif data > root.data:
+            root.right = self.__deleteNode(data, root.right)
+        else:
+            if root.left is None:
+                temp = root.right
+                del root
+                return temp
+            elif root.right is None:
+                temp = root.left
+                del root
+                return temp
+            temp = self.__findMin(root.right)
+            root.data = temp.data
+            root.right = self.__deleteNode(temp.data, root.right)
+        return root
+    def deleteNode(self,data):
+        return self.__deleteNode(data, self.root)
+    ####
+    def __getHeight(self, root):
+        if root is None:
+            return -1
+        left_h = self.__getHeight(root.left)
+        right_h = self.__getHeight(root.right)
+        if left_h > right_h:
+            return left_h + 1
+        else:
+            return right_h + 1
+    def getHeight(self):
+        return self.__getHeight(self.root)
 
 
 if __name__ == "__main__":
@@ -77,4 +109,10 @@ if __name__ == "__main__":
     tree.printData()
     print()
     print("root: ", tree.root.data)
-    print("min: ", tree.findMin())
+    search_res = tree.search(14)
+    if search_res is None:
+        print("not found")
+    else:
+        print("found")
+    tree.deleteNode(13)
+    tree.printData()
