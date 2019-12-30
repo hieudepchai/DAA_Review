@@ -1,5 +1,5 @@
 #https://www.hackerrank.com/challenges/birthday-cake-candles/problem
-ar =[8,8,1,1,3,4,5,8,8, 9] 
+ar =[8] 
 def birthdayCakeCandles(ar):
     max = ar[0]
     count = {}
